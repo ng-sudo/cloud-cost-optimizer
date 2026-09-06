@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
+*.pyc
 *.sqlite3
 *.db
 .venv/
@@ -10,13 +11,14 @@ venv/
 ENV/
 .env
 .env.*
+!.env.example
 
 # Django
 *.log
 *.pot
-*.pyc
 media/
 staticfiles/
+backend/db.sqlite3
 
 # Node / frontend
 node_modules/
@@ -37,3 +39,8 @@ Thumbs.db
 .coverage
 htmlcov/
 .pytest_cache/
+
+# Local project secrets / scratch files
+login.json
+*.local
+*.pem

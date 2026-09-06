@@ -1,161 +1,171 @@
 # Cloud Cost Optimizer
 
-A full-stack web application for analyzing cloud billing reports and generating cost optimization recommendations. Built with React (frontend) and Django REST Framework (backend).
-
-## Project Overview
-
-Cloud Cost Optimizer allows users to upload cloud billing CSV reports, analyze resource costs, identify underutilized resources, visualize spending patterns, and generate actionable optimization recommendations - all without requiring any cloud provider credentials.
+Cloud Cost Optimizer is a full-stack application for uploading cloud billing CSV files, analyzing spend, identifying underutilized resources, and generating actionable optimization recommendations. It combines a Django REST API with a React frontend and is designed as a portfolio-ready product for cloud cost visibility and savings analysis.
 
 ## Features
 
-- **User Authentication**: JWT-based register, login, logout, and profile management
-- **CSV Report Upload**: Upload cloud billing reports in CSV format
-- **Cost Analysis**: View detailed breakdown of costs by service, resource, and region
-- **Smart Recommendations**: Automatic identification of underutilized resources with estimated savings
-- **Visual Analytics**: Interactive charts (pie, bar, line) using Chart.js
-- **Data Export**: Export recommendations to CSV
-- **Search & Filter**: Search resources by service, region, resource name; filter by cost and utilization ranges
-- **Pagination**: Efficient handling of large datasets
-- **Responsive UI**: Clean, modern interface with Bootstrap-like styling
+- JWT-based authentication for users
+- CSV upload and parsing for billing data
+- Cost breakdown by service, region, and resource
+- Automatic recommendations for underutilized workloads
+- Interactive charts for spending insights
+- Search, filtering, and pagination for report analysis
+- Exportable recommendation output
+- Responsive React interface for local use and demo deployment
 
 ## Tech Stack
 
-### Frontend
-- React 18
-- React Router 6
-- Axios for API calls
-- Chart.js + react-chartjs-2 for visualizations
-- Custom CSS (no external UI libraries)
-
 ### Backend
 - Django 4.2
-- Django REST Framework 3.14
-- SimpleJWT for authentication
-- SQLite (development) / PostgreSQL (production ready)
-- django-filter for filtering
-- pandas for CSV processing
+- Django REST Framework
+- Simple JWT
+- Django Filters
+- Pandas for CSV processing
+- SQLite for local development
+
+### Frontend
+- React 18
+- React Router
+- Axios
+- Chart.js + react-chartjs-2
+- Custom CSS styling
 
 ## Project Structure
 
-```
+```text
 cloud-cost-optimizer/
 ├── backend/
-│   ├── cloud_optimizer/       # Django project settings
-│   ├── users/                 # User authentication app
-│   ├── cost_optimizer/        # Main business logic app
-│   │   ├── models.py          # UploadedReport, CloudRecord, Recommendation
-│   │   ├── views.py           # API views
-│   │   ├── serializers.py     # DRF serializers
-│   │   └── urls.py            # API endpoints
+│   ├── accounts/
+│   ├── authentication/
+│   ├── cloud_optimizer/
+│   ├── cost_optimizer/
+│   ├── users/
 │   ├── manage.py
-│   └── requirements.txt
+│   ├── requirements.txt
+│   └── db.sqlite3 (local dev database, ignored in public repos)
 ├── frontend/
 │   ├── public/
-│   └── src/
-│       ├── components/        # Reusable UI components
-│       ├── pages/             # Page components
-│       ├── services/          # API service layer
-│       ├── contexts/          # React contexts (Auth)
-│       └── App.js
-└── sample.csv                 # Sample billing data for testing
+│   ├── src/
+│   ├── package.json
+│   └── package-lock.json
+├── .gitignore
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+├── README.md
+├── sample.csv
+├── test.csv
+├── export_test.csv
+├── test_export.csv
+└── login.json
 ```
 
-## Installation
+## Local Setup
 
-### Backend Setup
+### 1) Clone and install backend dependencies
 
 ```bash
-cd backend
+git clone https://github.com/ng-sudo/cloud-cost-optimizer.git
+cd cloud-cost-optimizer/backend
+python -m venv .venv
+source .venv/bin/activate  # Linux/macOS
+# or .venv\Scripts\activate  # Windows
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 ```
 
-The API will be available at `http://localhost:8000/api/`
+The backend runs at:
+- http://localhost:8000
 
-### Frontend Setup
+### 2) Install and run frontend
 
 ```bash
-cd frontend
+cd ../frontend
 npm install
 npm start
 ```
 
-The frontend will be available at `http://localhost:3000` (proxies API calls to `http://localhost:8000`)
+The frontend runs at:
+- http://localhost:3000
 
-## API Endpoints
+## Environment Variables
 
-### Authentication
-- `POST /api/users/register/` - Register new user
-- `POST /api/users/login/` - Login (returns JWT tokens)
-- `GET /api/users/profile/` - Get current user profile
-- `PUT /api/users/profile/` - Update profile
+For production or deployment, use environment variables instead of hardcoded secrets.
 
-### Reports
-- `POST /api/upload/` - Upload CSV billing report
-- `GET /api/reports/` - List user's reports
-- `GET /api/reports/{id}/` - Get report details
-- `GET /api/reports/{id}/resources/` - Get paginated resources with filters
-- `GET /api/reports/{id}/recommendations/` - Get optimization recommendations
-- `GET /api/reports/{id}/charts/` - Get chart data
-- `GET /api/reports/{id}/export/` - Export recommendations as CSV
+Example backend environment:
 
-### Dashboard
-- `GET /api/dashboard/` - Get aggregate statistics
+```bash
+export DEBUG=False
+export DJANGO_SECRET_KEY=your-secret-key
+export ALLOWED_HOSTS=localhost,127.0.0.1,your-domain.com
+```
 
-## CSV Format
+## CSV Input Format
 
-Required columns: `Service,Resource,Region,UsageHours,Utilization,Cost`
+The app expects a CSV with these columns:
 
-Example:
 ```csv
 Service,Resource,Region,UsageHours,Utilization,Cost
 EC2,WebServer-01,us-east-1,730,15,450.00
-EC2,AppServer-02,us-east-1,730,68,520.00
 S3,BackupBucket,us-east-1,0,100,120.00
 RDS,PrimaryDB,us-east-1,730,42,680.00
 Lambda,ImageProcessor,us-east-1,45,12,85.00
 ```
 
+## API Overview
+
+### Authentication
+- POST /api/users/register/
+- POST /api/users/login/
+- GET /api/users/profile/
+- PUT /api/users/profile/
+
+### Reports and analysis
+- POST /api/upload/
+- GET /api/reports/
+- GET /api/reports/{id}/
+- GET /api/reports/{id}/resources/
+- GET /api/reports/{id}/recommendations/
+- GET /api/reports/{id}/charts/
+- GET /api/reports/{id}/export/
+
 ## Recommendation Logic
 
-The system applies simple rules based on resource utilization:
+The app applies simple utilization-based rules:
 
-| Utilization Range | Recommendation | Estimated Savings |
-|------------------|----------------|-------------------|
-| < 20%            | Terminate      | 90% of cost       |
-| 20% - 40%        | Downsize       | 50% of cost       |
-| 40% - 80%        | Healthy        | $0                |
-| > 80%            | Scale Up       | $0                |
+| Utilization | Recommendation | Estimated Savings |
+|-------------|----------------|-------------------|
+| < 20%       | Terminate      | 90% of cost       |
+| 20% - 40%   | Downsize       | 50% of cost       |
+| 40% - 80%   | Healthy        | $0                |
+| > 80%       | Scale Up       | $0                |
 
-## Cost Savings Score
+## Security Notes
 
-A bonus feature calculates a "Cost Savings Score":
-- **Formula**: `100 - (Total Estimated Savings / Total Cost × 100)`
-- **Green (≥ 80)**: Well optimized
-- **Yellow (50-79)**: Room for improvement  
-- **Red (< 50)**: Significant optimization needed
+- Password hashing via Django's default secure methods
+- JWT-based authentication
+- CORS configured for local frontend development
+- API permissions enforced for protected routes
 
-## Security
+## CI and Deployment
 
-- Password hashing with Django's PBKDF2
-- JWT authentication with access/refresh tokens
-- Token blacklisting on logout
-- Protected API endpoints
-- Input validation on all endpoints
-- CSRF protection where applicable
+This repository includes a GitHub Actions workflow for basic validation:
 
-## Future Enhancements
+- backend dependency install
+- Django system check
+- frontend dependency install
+- production React build
 
-- Multi-cloud support (AWS, Azure, GCP specific parsers)
-- Historical trend analysis
-- Budget alerts and notifications
-- Team collaboration features
-- Advanced ML-based anomaly detection
-- Scheduled report imports
-- Role-based access control
-- Docker deployment configuration
+The workflow is located at:
+- .github/workflows/ci.yml
+
+For deployment, you can host the backend on Render, Railway, or a VPS, and the frontend on Vercel or Netlify with a configured API base URL.
 
 ## License
 
-MIT License - Educational/portfolio project
+MIT License
+
+## Contributing
+
+Contributions are welcome. Please fork the repository, create a feature branch, and open a pull request with a concise description of the change.

@@ -1,0 +1,9 @@
+Service,Resource,Region,UsageHours,Utilization,Cost
+EC2,WebServer-01,us-east-1,730,15,450.00
+EC2,AppServer-02,us-east-1,730,68,520.00
+S3,BackupBucket,us-east-1,0,100,120.00
+RDS,PrimaryDB,us-east-1,730,42,680.00
+Lambda,ImageProcessor,us-east-1,45,12,85.00
+CloudFront,StaticCDN,us-east-1,0,95,230.00
+DynamoDB,SessionTable,us-east-1,730,35,340.00
+EC2,DevServer,us-west-2,180,8,180.00

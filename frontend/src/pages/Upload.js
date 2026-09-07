@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Row, Col, Card, CardBody, CardHeader, Button, Alert, Progress, Spinner, Badge } from '../components/UI';
+import { Container, Row, Col, Card, CardBody, CardHeader, Button, Alert, Progress, Spinner } from '../components/UI';
 import { reportService } from '../services/api';
 
 const Upload = () => {

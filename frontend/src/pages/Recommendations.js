@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Card, CardBody, CardHeader, Button, Badge, Table, Pagination, Alert, Spinner, Select, FormGroup, Input } from '../components/UI';
+import { Container, Row, Col, Card, CardBody, CardHeader, Button, Badge, Table, Pagination, Alert, Spinner, Select } from '../components/UI';
 import { reportService } from '../services/api';
 
 const Recommendations = () => {
@@ -11,7 +11,7 @@ const Recommendations = () => {
   const [filter, setFilter] = useState('');
   const [pagination, setPagination] = useState({ page: 1, pageSize: 20 });
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       const params = { page: pagination.page, page_size: pagination.pageSize };
@@ -23,9 +23,9 @@ const Recommendations = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filter, pagination.page, pagination.pageSize, reportId]);
 
-  useEffect(() => { fetchData(); }, [reportId, pagination.page, filter]);
+  useEffect(() => { fetchData(); }, [fetchData]);
 
   const handleFilterChange = (value) => {
     setFilter(value);

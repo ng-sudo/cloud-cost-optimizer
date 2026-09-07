@@ -27,7 +27,7 @@ const ReportDetail = () => {
       }
     };
     fetchData();
-  }, [reportId, pagination.page]);
+  }, [pagination.page, pagination.pageSize, reportId]);
 
   const handlePageChange = (page) => {
     setPagination(prev => ({ ...prev, page }));

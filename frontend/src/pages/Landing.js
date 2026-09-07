@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Button, Card, Spacer } from '../components/UI';
+import { Container, Row, Col, Button, Card } from '../components/UI';
 
 const Landing = () => {
   const features = [
@@ -115,7 +115,7 @@ const Landing = () => {
       {/* Footer */}
       <footer className="footer">
         <Container>
-          <p>&copy; 2024 Cloud Cost Optimizer. Built for developers, by developers.</p>
+          <p>&copy; {new Date().getFullYear()} Cloud Cost Optimizer. Built for developers, by developers.</p>
           <p className="text-muted" style={{ fontSize: '0.875rem', marginTop: '8px' }}>
             No cloud credentials required. Works with CSV exports from AWS, Azure, GCP.
           </p>

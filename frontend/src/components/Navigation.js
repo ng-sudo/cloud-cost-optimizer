@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Button } from './UI';
 
 const Navigation = () => {
   const { user, isAuthenticated, logout } = useAuth();
@@ -12,7 +11,7 @@ const Navigation = () => {
         <Link to="/" className="navbar-brand">
           Cloud Cost Optimizer
         </Link>
-        
+
         <ul className="navbar-nav">
           {isAuthenticated ? (
             <>
@@ -21,15 +20,6 @@ const Navigation = () => {
               </li>
               <li className="nav-item">
                 <Link to="/upload" className="nav-link">Upload Report</Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/analysis" className="nav-link">Cost Analysis</Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/recommendations" className="nav-link">Recommendations</Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/analytics" className="nav-link">Analytics</Link>
               </li>
               <li className="nav-item">
                 <div className="user-menu">

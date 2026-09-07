@@ -1,11 +1,12 @@
+from django.contrib.auth import get_user_model
 from rest_framework import status, generics, views
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import authenticate
-from .models import User
 from .serializers import RegisterSerializer, LoginSerializer, UserSerializer, ChangePasswordSerializer
+
+User = get_user_model()
 
 
 class RegisterView(generics.CreateAPIView):

@@ -1,6 +1,8 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .models import User
+
+User = get_user_model()
 
 
 class RegisterSerializer(serializers.ModelSerializer):

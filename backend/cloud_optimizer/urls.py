@@ -9,6 +9,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('cost_optimizer.urls')),
+    path('api/auth/', include('authentication.urls')),
     path('api/users/', include('users.urls')),
 ]
 

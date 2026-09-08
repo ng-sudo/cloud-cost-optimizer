@@ -53,11 +53,7 @@ cloud-cost-optimizer/
 │   └── workflows/
 │       └── ci.yml
 ├── README.md
-├── sample.csv
-├── test.csv
-├── export_test.csv
-├── test_export.csv
-└── login.json
+└── sample.csv
 ```
 
 ## Local Setup

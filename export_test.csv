@@ -1,9 +1,0 @@
-Service,Resource,Region,Cost,Utilization %,Recommendation Type,Recommendation,Estimated Savings
-EC2,WebServer-01,us-east-1,450.0,15.0,terminate,Consider terminating WebServer-01 (EC2) - utilization is only 15.00%,405.0
-DynamoDB,SessionTable,us-east-1,340.0,35.0,downsize,Consider downsizing SessionTable (DynamoDB) - utilization is 35.00%,170.0
-EC2,DevServer,us-west-2,180.0,8.0,terminate,Consider terminating DevServer (EC2) - utilization is only 8.00%,162.0
-Lambda,ImageProcessor,us-east-1,85.0,12.0,terminate,Consider terminating ImageProcessor (Lambda) - utilization is only 12.00%,76.5
-RDS,PrimaryDB,us-east-1,680.0,42.0,healthy,PrimaryDB (RDS) is healthy with 42.00% utilization,0.0
-EC2,AppServer-02,us-east-1,520.0,68.0,healthy,AppServer-02 (EC2) is healthy with 68.00% utilization,0.0
-CloudFront,StaticCDN,us-east-1,230.0,95.0,highly_utilized,StaticCDN (CloudFront) is highly utilized at 95.00% - consider scaling up,0.0
-S3,BackupBucket,us-east-1,120.0,100.0,highly_utilized,BackupBucket (S3) is highly utilized at 100.00% - consider scaling up,0.0
